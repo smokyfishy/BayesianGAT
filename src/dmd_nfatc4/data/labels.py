@@ -1,0 +1,190 @@
+"""Curated DMD-associated gene list used as positive labels in the original GAT.
+
+Copied verbatim from ``DMD.ipynb`` cell 61 (79 symbols; the same set, in grouped
+form with comments, appears in cell 59). The group names below come from the
+notebook's own comments. **No literature citations were recorded in the notebook**;
+``citation`` is therefore left as ``None`` rather than invented. Before publication
+each entry should be curated against primary literature.
+
+Interpretation (see docs/REPRODUCIBILITY_AUDIT.md, item 1): these are *weak positive
+labels*. Every other gene is **unlabeled**, not a verified negative. Several entries
+are broad inflammation/apoptosis genes (TNF, IL6, CASP3, SOD1, ...) rather than
+established DMD modifiers, and three (DMDP1, DMDP2, XIST) are not protein-coding,
+so they cannot appear in the protein-coding node table at all.
+"""
+
+from __future__ import annotations
+
+import pandas as pd
+
+_GROUPS: dict[str, list[str]] = {
+    "core DMD pathway genes / biomarkers": [
+        "DMD",
+        "CKM",
+        "SGCA",
+        "SGCB",
+        "SGCD",
+        "CAPN3",
+        "DES",
+        "MYH7",
+        "MYOG",
+        "ACTA1",
+        "ACTA2",
+        "DMDP1",
+        "DMDP2",
+    ],
+    "literature-validated modifiers (original set; per notebook comment)": [
+        "SPP1",
+        "LTBP4",
+        "CD40",
+        "ACTN3",
+        "NOS1",
+        "UTRN",
+        "THBS1",
+        "TGFB1",
+        "SMAD7",
+        "MMP9",
+        "COL6A1",
+        "COL6A2",
+        "COL6A3",
+        "PLOD1",
+        "CDH15",
+        "TNF",
+        "CCL2",
+    ],
+    "additional modifiers from broader DMD-pathway studies": [
+        "MSTN",
+        "FST",
+        "ANXA6",
+        "DNM2",
+        "XIST",
+        "TGFB2",
+        "TGFB3",
+        "COL1A1",
+        "COL3A1",
+        "MMP2",
+        "MMP14",
+        "TIMP1",
+        "TIMP2",
+        "EDN1",
+        "IL6",
+        "IL10",
+        "IL1B",
+        "TNFRSF1A",
+        "TNFRSF1B",
+        "CD163",
+        "CD68",
+        "ITGB4",
+        "IL4",
+        "IL13",
+        "CCL5",
+        "CCL7",
+        "CCL11",
+        "CCR2",
+        "CCR5",
+        "CST3",
+        "FN1",
+    ],
+    "muscle regeneration / myogenesis regulators": ["PAX7", "MYOD1", "MYF5", "MYF6"],
+    "apoptosis / oxidative stress modulators": ["CASP3", "CASP8", "SOD1", "SOD2", "GPX3", "XRCC1", "PARP1"],
+    "extracellular matrix / fibrosis": ["LAMA2", "LAMA4", "FNDC5", "ELN", "TNC", "VCAM1", "ICAM1"],
+}
+
+# Exact order of DMD.ipynb cell 61.
+KNOWN_DMD_GENES: list[str] = [
+    "DMD",
+    "CKM",
+    "SGCA",
+    "SGCB",
+    "SGCD",
+    "CAPN3",
+    "DES",
+    "MYH7",
+    "MYOG",
+    "ACTA1",
+    "ACTA2",
+    "DMDP1",
+    "DMDP2",
+    "SPP1",
+    "LTBP4",
+    "CD40",
+    "ACTN3",
+    "NOS1",
+    "UTRN",
+    "THBS1",
+    "TGFB1",
+    "SMAD7",
+    "MMP9",
+    "COL6A1",
+    "COL6A2",
+    "COL6A3",
+    "PLOD1",
+    "CDH15",
+    "TNF",
+    "CCL2",
+    "MSTN",
+    "FST",
+    "ANXA6",
+    "DNM2",
+    "XIST",
+    "TGFB2",
+    "TGFB3",
+    "COL1A1",
+    "COL3A1",
+    "MMP2",
+    "MMP14",
+    "TIMP1",
+    "TIMP2",
+    "EDN1",
+    "IL6",
+    "IL10",
+    "IL1B",
+    "TNFRSF1A",
+    "TNFRSF1B",
+    "CD163",
+    "CD68",
+    "ITGB4",
+    "IL4",
+    "IL13",
+    "CCL5",
+    "CCL7",
+    "CCL11",
+    "CCR2",
+    "CCR5",
+    "CST3",
+    "FN1",
+    "PAX7",
+    "MYOD1",
+    "MYF5",
+    "MYF6",
+    "CASP3",
+    "CASP8",
+    "SOD1",
+    "SOD2",
+    "GPX3",
+    "XRCC1",
+    "PARP1",
+    "LAMA2",
+    "LAMA4",
+    "FNDC5",
+    "ELN",
+    "TNC",
+    "VCAM1",
+    "ICAM1",
+]
+
+NON_PROTEIN_CODING = {"DMDP1", "DMDP2", "XIST"}
+
+
+def label_manifest() -> pd.DataFrame:
+    group_of = {g: grp for grp, genes in _GROUPS.items() for g in genes}
+    return pd.DataFrame(
+        {
+            "gene_symbol": KNOWN_DMD_GENES,
+            "notebook_group": [group_of.get(g) for g in KNOWN_DMD_GENES],
+            "protein_coding_expected": [g not in NON_PROTEIN_CODING for g in KNOWN_DMD_GENES],
+            "source": "DMD.ipynb cell 61",
+            "citation": None,
+            "label_semantics": "weak positive (curated); all other genes unlabeled",
+        }
+    )

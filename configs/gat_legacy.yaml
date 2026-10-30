@@ -1,0 +1,28 @@
+# Legacy reproduction of DMD.ipynb cells 60-72.
+# WARNING: augments the full graph BEFORE splitting -> synthetic copies of training
+# positives land in val/test. Metrics from this protocol are not valid generalisation
+# estimates. Requires assets/dmd/node_features.parquet (not in the starter archive).
+mode: legacy
+run_name: gat_legacy_node_table
+data:
+  source: node_table            # node_table | tpm_only | synthetic
+  node_features: dmd/node_features.parquet
+  ppi_edges: dmd/ppi_edges_genes.tsv
+graph:
+  knn: true                     # cell 62: PPI + kNN (k=10, Euclidean, all nodes)
+  knn_k: 10
+augmentation:
+  ratio: 0.25                   # cell 63: positives -> 25% of negatives
+  k: 5
+split_seed: 42                  # cell 65: np.random.default_rng(42), 70/15/15 per class
+model:                          # cell 70 "grid-search best"
+  hidden_channels: 32
+  heads_1: 2
+  heads_2: 2
+  dropout: 0.5
+  use_edge_confidence: true     # inert in the original: no edge attributes were ever passed
+training:
+  epochs: 100
+  lr: 0.005
+  weight_decay: 0.0005
+mc_samples: 50

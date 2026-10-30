@@ -1,0 +1,25 @@
+# Legacy (leaky) protocol on the locally available TPM + PPI data, for a like-for-like
+# comparison with gat_corrected_tpm_only.yaml. Reduced features; not the original model.
+mode: legacy
+run_name: gat_legacy_tpm_only
+data:
+  source: tpm_only
+  expression: dmd/expression_gene_tpm_protein_coding.parquet
+  ppi_edges: dmd/ppi_edges_genes.tsv
+graph:
+  knn: true
+  knn_k: 10
+augmentation:
+  ratio: 0.25
+  k: 5
+split_seed: 42
+model:
+  hidden_channels: 32
+  heads_1: 2
+  heads_2: 2
+  dropout: 0.5
+training:
+  epochs: 100
+  lr: 0.005
+  weight_decay: 0.0005
+mc_samples: 30

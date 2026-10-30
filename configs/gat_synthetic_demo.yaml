@@ -1,0 +1,11 @@
+# SYNTHETIC fixture (software smoke test only; no biological meaning).
+mode: corrected
+run_name: gat_synthetic_demo
+data:
+  source: synthetic
+  synthetic: {n_genes: 300, n_pos: 24, n_go: 40, n_esm: 16, seed: 0}
+graph: {protocol: inductive, knn: true, knn_k: 5}
+augmentation: {enabled: true, ratio: 0.25, k: 5, synthetic_edges: train_neighbors}
+model: {hidden_channels: 16, heads_1: 2, heads_2: 2, dropout: 0.5}
+training: {epochs: 40, lr: 0.005, weight_decay: 0.0005, selection_metric: pr_auc}
+mc_samples: 10

@@ -1,0 +1,32 @@
+# Corrected protocol: split original genes first, augmentation on training positives
+# only, scaler fitted on training genes, evaluation on held-out ORIGINAL genes.
+# Labels = curated positives vs UNLABELED genes (positive-unlabeled setting).
+mode: corrected
+run_name: gat_corrected_node_table
+data:
+  source: node_table
+  node_features: dmd/node_features.parquet
+  ppi_edges: dmd/ppi_edges_genes.tsv
+features:
+  scaler_fit: train_nodes       # train_nodes | all_nodes
+graph:
+  protocol: inductive           # inductive | transductive
+  knn: true
+  knn_k: 10
+augmentation:
+  enabled: true
+  ratio: 0.25
+  k: 5
+  synthetic_edges: train_neighbors   # train_neighbors | none | all_neighbors
+model:
+  hidden_channels: 32
+  heads_1: 2
+  heads_2: 2
+  dropout: 0.5
+  edge_confidence_in_attention: false  # true -> STRING score actually enters GATv2 attention
+training:
+  epochs: 100
+  lr: 0.005
+  weight_decay: 0.0005
+  selection_metric: pr_auc
+mc_samples: 50

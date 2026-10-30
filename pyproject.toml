@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dmd-nfatc4-graph-ml"
+version = "0.1.0"
+description = "Reproducible rebuild of a DMD gene-graph Bayesian GAT and NFATC4 residue-graph analysis, with legacy and leakage-free protocols"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+authors = [{ name = "Akshay Karthik" }]
+dependencies = [
+  "torch>=2.2,<2.6",
+  "torch_geometric>=2.5,<2.7",
+  "numpy>=1.24,<2.2",
+  "scipy>=1.10",
+  "pandas>=2.0",
+  "pyarrow>=14",
+  "scikit-learn>=1.3",
+  "biopython>=1.81",
+  "pyyaml>=6",
+  "matplotlib>=3.7",
+  "networkx>=3.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5"]
+
+[project.scripts]
+dmd-nfatc4 = "dmd_nfatc4.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = ["assets: requires the local (git-ignored) assets/ directory"]
+filterwarnings = ["ignore::dmd_nfatc4.utils.LegacyMethodWarning"]
+
+[tool.ruff]
+line-length = 130
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E741", "B905", "E501"]  # line length is handled by `ruff format`

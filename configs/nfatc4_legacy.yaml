@@ -1,0 +1,9 @@
+# Legacy reproduction of NFATC4.ipynb cell 25.
+# WARNING: x = [ESM | simulated flag] and y = x[:, -1] -> the label is an input.
+mode: legacy
+data:
+  pdb: nfatc4/AF-Q14934-F1-model_v4.pdb
+  esm: nfatc4/Q14934_esm.npy
+  mutation_vector: nfatc4/simulated_dmd_mutation_vector.npy
+model: {hidden_dim: 256, dropout: 0.3, heads: 4}
+training: {epochs: 100, lr: 0.004, weight_decay: 0.00001}

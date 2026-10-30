@@ -1,0 +1,47 @@
+# Large/private scientific inputs and model artifacts supplied in the starter archive
+/assets/
+/data/
+/models/
+/checkpoints/
+/outputs/
+/runs/
+/cache/
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.parquet
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.fastq
+*.fastq.gz
+*.fq.gz
+*.bam
+*.sam
+*.cram
+*.bgz
+*.gtf
+*.gaf
+*.h5ad
+*.zip
+# Allow future intentionally tracked small fixture inputs under tests/fixtures/
+!tests/fixtures/*.npy
+# Python/IDE
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+.env
+.env.*
+.ipynb_checkpoints/
+.DS_Store
+.idea/
+.vscode/
+# Build artefacts
+*.egg-info/
+build/
+dist/

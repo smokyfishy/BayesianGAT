@@ -1,0 +1,30 @@
+# Corrected protocol on the data that IS available locally: real STRING PPI graph +
+# real 6-sample TPM features. GO and ESM blocks are missing (node_features.parquet not
+# supplied), so this is a reduced-feature experiment, not the original model.
+mode: corrected
+run_name: gat_corrected_tpm_only
+data:
+  source: tpm_only
+  expression: dmd/expression_gene_tpm_protein_coding.parquet
+  ppi_edges: dmd/ppi_edges_genes.tsv
+features:
+  scaler_fit: train_nodes
+graph:
+  protocol: inductive
+  knn: false
+augmentation:
+  enabled: true
+  ratio: 0.25
+  k: 5
+  synthetic_edges: train_neighbors
+model:
+  hidden_channels: 32
+  heads_1: 2
+  heads_2: 2
+  dropout: 0.5
+training:
+  epochs: 100
+  lr: 0.005
+  weight_decay: 0.0005
+  selection_metric: pr_auc
+mc_samples: 30
