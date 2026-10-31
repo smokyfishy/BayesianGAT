@@ -1,6 +1,6 @@
 # DMD Bayesian GAT and NFATC4 residue-graph analysis
 
-A reproducible, modular rebuild of a two-stage graph machine-learning project on
+A reproducible, modular rebuild of my two-stage graph machine-learning project on
 **Duchenne muscular dystrophy (DMD)**:
 
 1. **Gene level.** A GATv2 network with MC-dropout uncertainty (`EnhancedBayesianGAT`)
